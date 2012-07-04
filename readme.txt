@@ -2,7 +2,7 @@
 Contributors: joshmccarty
 Tags: css, css naked day, styles
 Requires at least: 3.3.1
-Tested up to: 3.3.1
+Tested up to: 3.4.1
 Stable tag: 1.0
 License: GPLv2
 
