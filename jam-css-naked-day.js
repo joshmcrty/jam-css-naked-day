@@ -1,5 +1,5 @@
 // Insert the CSS Naked Day message at the top of the page
-( function( $ ) {
+;( function( $ ) {
 	$( document ).ready( function() {
 		if ( jamCssNakedDayOptions.displayMessage === 'yes' ) {
 			$( 'body' ).prepend( jamCssNakedDayOptions.message );

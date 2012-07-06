@@ -9,7 +9,7 @@ Author URI: http://joshmccarty.com
 License: GNU General Public License, version 2 (GPL).
 */
 
-/*  Copyright 2012  Josh McCarty  (email: info@joshmccarty.com)
+/*  Copyright 2012 Josh McCarty  (email: info@joshmccarty.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as
@@ -26,6 +26,9 @@ License: GNU General Public License, version 2 (GPL).
 */
 
 // Based on CSS Naked Day plugin by ajalapus (http://wordpress.org/extend/plugins/css-naked-day-noscript/)
+
+// Enable internationalization
+load_plugin_textdomain( 'jam_css_naked_day', false, basename( dirname( __FILE__ ) ) . 'languages' );
 
 /**
  * Register the form setting for our jam_css_naked_day_options array.
@@ -44,7 +47,7 @@ function jam_css_naked_day_options_init() {
 
 	// Check that the current user can access the options page.
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+		wp_die( __( 'You do not have sufficient permissions to access this page.', 'jam_css_naked_day' ) );
 	}
 
 	// If we have no options in the database, let's add them now.
@@ -68,35 +71,35 @@ function jam_css_naked_day_options_init() {
 	// Register our individual settings fields
 	add_settings_field(
 		'preview_checkbox',                                  // Unique identifier for the field for this section
-		__( 'Preview Mode' ),                                // Setting field label
+		__( 'Preview Mode', 'jam_css_naked_day' ),                                // Setting field label
 		'jam_css_naked_day_settings_field_preview_checkbox', // Function that renders the settings field
 		'jam_css_naked_day_options',                         // Menu slug, used to uniquely identify the page; see jam_css_naked_day_options_add_page()
 		'general'                                            // Settings section. Same as the first argument in the add_settings_section() above
 	);
 	add_settings_field(
 		'timeframe_radio_buttons',
-		__( 'Timeframe' ),
+		__( 'Timeframe', 'jam_css_naked_day' ),
 		'jam_css_naked_day_settings_field_timeframe_radio_buttons',
 		'jam_css_naked_day_options',
 		'general'
 	);
 	add_settings_field(
 		'script_mode_radio_buttons',
-		__( 'Script Mode' ),
+		__( 'Script Mode', 'jam_css_naked_day' ),
 		'jam_css_naked_day_settings_field_script_mode_radio_buttons',
 		'jam_css_naked_day_options',
 		'general'
 	);
 	add_settings_field(
 		'message_radio_buttons',
-		__( 'Display Message' ),
+		__( 'Display Message', 'jam_css_naked_day' ),
 		'jam_css_naked_day_settings_field_message_radio_buttons',
 		'jam_css_naked_day_options',
 		'general'
 	);
 	add_settings_field(
 		'message_textarea',
-		__( 'Message Text' ),
+		__( 'Message Text', 'jam_css_naked_day' ),
 		'jam_css_naked_day_settings_field_message_textarea',
 		'jam_css_naked_day_options',
 		'general'
@@ -115,8 +118,8 @@ add_action( 'admin_init', 'jam_css_naked_day_options_init' );
 function jam_css_naked_day_options_add_page() {
 	$theme_page = add_submenu_page(
 		'themes.php',
-		__( 'CSS Naked Day Options' ),          // Name of page
-		__( 'CSS Naked Day' ),                  // Label in menu
+		__( 'CSS Naked Day Options', 'jam_css_naked_day' ),          // Name of page
+		__( 'CSS Naked Day', 'jam_css_naked_day' ),                  // Label in menu
 		'manage_options',                       // Capability required
 		'jam_css_naked_day_options',            // Menu slug, used to uniquely identify the page
 		'jam_css_naked_day_options_render_page' // Function that renders the options page
@@ -133,11 +136,11 @@ function jam_css_naked_day_timeframe_radio_buttons() {
 	$timeframe_radio_buttons = array(
 		'local' => array(
 			'value' => 'local',
-			'label' => __( '24 hours in your website time zone' )
+			'label' => __( '24 hours in your website time zone', 'jam_css_naked_day' )
 		),
 		'global' => array(
 			'value' => 'global',
-			'label' => __( '48 hours (encompass all time zones)' )
+			'label' => __( '48 hours (encompass all time zones)', 'jam_css_naked_day' )
 		)
 	);
 
@@ -153,11 +156,11 @@ function jam_css_naked_day_script_mode_radio_buttons() {
 	$script_mode_radio_buttons = array(
 		'js' => array(
 			'value' => 'js',
-			'label' => __( 'Use JavaScript (may cause a flash of styled content when the page initially loads)' )
+			'label' => __( 'Use JavaScript (may cause a flash of styled content when the page initially loads)', 'jam_css_naked_day' )
 		),
 		'php' => array(
 			'value' => 'php',
-			'label' => __( 'Use PHP output buffering (may cause slower load times for pages)' )
+			'label' => __( 'Use PHP output buffering (may cause slower load times for pages)', 'jam_css_naked_day' )
 		)
 	);
 
@@ -173,11 +176,11 @@ function jam_css_naked_day_message_radio_buttons() {
 	$message_radio_buttons = array(
 		'yes' => array(
 			'value' => 'yes',
-			'label' => __( 'Yes' )
+			'label' => __( 'Yes', 'jam_css_naked_day' )
 		),
 		'no' => array(
 			'value' => 'no',
-			'label' => __( 'No' )
+			'label' => __( 'No', 'jam_css_naked_day' )
 		)
 	);
 
@@ -218,7 +221,7 @@ function jam_css_naked_day_settings_field_preview_checkbox() {
 	?>
 	<label for"preview-checkbox">
 		<input type="checkbox" name="jam_css_naked_day_options[preview_checkbox]" id="preview-checkbox" <?php checked( 'on', $options['preview_checkbox'] ); ?> />
-		<?php _e( 'Check this box to see how your site looks without CSS right now (only for logged in users who have access to manage options for the site).' );  ?>
+		<?php _e( 'Check this box to see how your site looks without CSS right now (only for logged in users who have access to manage options for the site).', 'jam_css_naked_day' );  ?>
 	</label>
 	<?php
 }
@@ -290,7 +293,7 @@ function jam_css_naked_day_settings_field_message_textarea() {
 	$options = jam_css_naked_day_get_options();
 	?>
 	<textarea class="large-text" type="text" name="jam_css_naked_day_options[message_textarea]" id="message-textarea" cols="50" rows="10" /><?php echo stripslashes( esc_textarea( $options['message_textarea'] ) ); ?></textarea>
-	<label class="description" for="message-textarea"><?php _e( 'Enter the message you want visitors to see when the come to your site on CSS Naked Day' ); ?></label>
+	<label class="description" for="message-textarea"><?php _e( 'Enter the message you want visitors to see when the come to your site on CSS Naked Day', 'jam_css_naked_day' ); ?></label>
 	<?php
 }
 
@@ -303,7 +306,7 @@ function jam_css_naked_day_options_render_page() {
 	?>
 	<div class="wrap">
 		<?php screen_icon(); ?>
-		<h2>CSS Naked Day Options</h2>
+		<h2><?php _e( 'CSS Naked Day Options', 'jam_css_naked_day' ); ?></h2>
 		<?php settings_errors(); ?>
 
 		<form method="post" action="options.php">
